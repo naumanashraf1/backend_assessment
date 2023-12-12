@@ -14,14 +14,17 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"celebrate": "^15.0.3",
 		"express": "^4.17.1",
 		"faker": "^5.5.3",
+		"joi": "^17.11.0",
 		"jsonwebtoken": "^8.5.1",
 		"kafkajs": "^1.15.0",
 		"knex": "^0.95.6",
 		"node-rdkafka": "^2.12.0",
 		"objection": "^2.2.15",
-		"pg": "^8.6.0"
+		"pg": "^8.6.0",
+		"winston": "^3.11.0"
 	},
 	"devDependencies": {
 		"eslint": "^7.18.0",

@@ -6,36 +6,30 @@ const { processMessage } = require('./StreamManager');
  ***************************/
 
 const initConsumer = async () => {
+  const kafka = new Kafka({
+    clientId: 'social',
+    brokers: ['kafka:9093'], // Remove "http:" prefix
+  });
 
-	const kafka = new Kafka({
-		clientId: 'social',
-		brokers: ['kafka:9092']
-	});
+  const consumer = kafka.consumer({ groupId: 'social-consumer' });
 
-	const consumer = kafka.consumer({ groupId: 'social-consumer' });
+  try {
+    await consumer.connect();
 
-	try {
+    console.log('Connected');
 
-		await consumer.connect();
+    await consumer.subscribe({ topic: 'event_stream', fromBeginning: true });
 
-		console.log('Connected');
+    console.log('Subscribed');
 
-		await consumer.subscribe({ topic: 'event_stream', fromBeginning: true });
-
-		console.log('Subscribed');
-
-
-		await consumer.run({
-			eachMessage: async ({ message }) => {
-
-				processMessage(JSON.parse(message.value.toString()));
-
-			}
-		});
-	} catch (err) {
-		console.log('Error ----->', err.message);
-	}
-
+    await consumer.run({
+      eachMessage: async ({ message }) => {
+        processMessage(JSON.parse(message.value.toString()));
+      },
+    });
+  } catch (err) {
+    console.log('Error ----->', err.message);
+  }
 };
 
 module.exports = { initConsumer };
