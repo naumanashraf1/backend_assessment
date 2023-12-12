@@ -58,7 +58,7 @@ const initProducer = async () => {
       });
     });
 
-    tenantIds.map(async (id) => {
+    tenantIds.map(async () => {
       await producer.send({
         topic: 'event_stream',
         messages: [

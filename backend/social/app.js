@@ -13,7 +13,7 @@ console.log(userRouter);
 app.use('/user', userRouter);
 app.use('/tenant', tenantRouter);
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   // Log the error using the logger
   logger.error(err);
 
@@ -21,11 +21,9 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal Server Error' });
 });
 app.use('/', async (req, res) => {
-  res
-    .status(200)
-    .json({
-      message: `App is running on portsadasdasdas. ${process.env.PORT || 4000}`,
-    });
+  res.status(200).json({
+    message: `App is running on portsadasdasdas. ${process.env.PORT || 4000}`,
+  });
 });
 
 server = app.listen(process.env.PORT || 4000, async () => {
